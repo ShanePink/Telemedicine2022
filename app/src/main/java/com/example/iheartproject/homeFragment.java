@@ -29,7 +29,7 @@ public class homeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    // Define ur variables here
+    // Define variables here
     private TextView textView;
     private String backValue;
 
@@ -74,19 +74,16 @@ public class homeFragment extends Fragment {
             Log.d("Main",backValue);
             // Perform any action here
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         View inf = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Perform any action here
+        /*// Perform any action here
         textView = (TextView) inf.findViewById(R.id.textView3);
         if(backValue == null)
         {
@@ -94,15 +91,14 @@ public class homeFragment extends Fragment {
         }
         else{
             textView.setText(backValue);
-        }
+        }*/
 
-
-        Button b1 = (Button) inf.findViewById(R.id.button);
-        b1.setOnClickListener(
+        Button diagnosticButton = (Button) inf.findViewById(R.id.DiagnosticButton);
+        diagnosticButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // instantiate ur destination fragment
+                        // Instantiate destination fragment
                         Log.d("HomeFrag","Button Pressed!");
 
                         startActivity(new Intent( getActivity(), DiagnosticActivity.class));
@@ -115,8 +111,7 @@ public class homeFragment extends Fragment {
                 }
         );
 
-
-        Button lifeSupportButton = (Button) inf.findViewById(R.id.lsEquipmentBtn);
+        Button lifeSupportButton = (Button) inf.findViewById(R.id.LifeSupportButton);
         lifeSupportButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -136,11 +131,80 @@ public class homeFragment extends Fragment {
                 }
         );
 
+        Button treatmentButton = (Button) inf.findViewById(R.id.TreatmentButton);
+        treatmentButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // instantiate ur destination fragment
+                        Log.d("HomeFrag","Button Pressed!");
 
+                        startActivity(new Intent( getActivity(), TreatmentActivity.class));
+ /*                     /*Fragment mFragment = new DiagnosticFragment();
+
+                        // Copy this to switch page, but mfragment to desired fragment obj
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                    }
+                }
+        );
+
+        Button monitorButton = (Button) inf.findViewById(R.id.MonitorButton);
+        monitorButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // instantiate ur destination fragment
+                        Log.d("HomeFrag","Button Pressed!");
+
+                        startActivity(new Intent( getActivity(), MonitorActivity.class));
+ /*                     /*Fragment mFragment = new DiagnosticFragment();
+
+                        // Copy this to switch page, but mfragment to desired fragment obj
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                    }
+                }
+        );
+
+        Button medLabButton = (Button) inf.findViewById(R.id.MedLabButton);
+        medLabButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // instantiate ur destination fragment
+                        Log.d("HomeFrag","Button Pressed!");
+
+                        startActivity(new Intent( getActivity(), MedLabActivity.class));
+ /*                     /*Fragment mFragment = new DiagnosticFragment();
+
+                        // Copy this to switch page, but mfragment to desired fragment obj
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                    }
+                }
+        );
+
+        Button therapeuticButton = (Button) inf.findViewById(R.id.TherapeuticButton);
+        therapeuticButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // instantiate ur destination fragment
+                        Log.d("HomeFrag","Button Pressed!");
+
+                        startActivity(new Intent( getActivity(), TherapeuticActivity.class));
+ /*                     /*Fragment mFragment = new DiagnosticFragment();
+
+                        // Copy this to switch page, but mfragment to desired fragment obj
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                    }
+                }
+        );
 
         // Make sure to return view
         return inf;
-
 
     }
 }

@@ -6,14 +6,20 @@
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/drawable/home.xml" value="0.18" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.196" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/drawable/ic_baseline_transfer_within_a_station_24.xml" value="0.196" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/drawable/round_button.xml" value="0.2825" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_diagnostic.xml" value="0.33" />
-        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_life_support.xml" value="0.25" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_life_support.xml" value="0.33" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_med_lab.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_monitor.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_therapeutic.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_treatment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/activity_user_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/diagnostic_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_diagnostic.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_status.xml" value="0.25" />
+        <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/layout/fragment_status.xml" value="0.33" />
         <entry key="..\:/Users/Boo/AndroidStudioProjects/IHeartProject/app/src/main/res/menu/bottom_nav.xml" value="0.18802083333333333" />
       </map>
     </option>
