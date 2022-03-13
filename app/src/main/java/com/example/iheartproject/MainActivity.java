@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     }
     // U can do like a nested object, so u can categorize into one object based on ur type
     class SampleObject{
-        int quantity;
-        int expDate;
+        String quantity;
+        String expDate;
         String equipmentName;
         String manufacturer;
         String model;
@@ -57,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
     public Data InstantiateObj(){
         Data data = new Data();
         SampleObject sampleObj = new SampleObject();
-        sampleObj.nestedVal = "Nested Val";
+        sampleObj.quantity="Quantity";
+        sampleObj.expDate="Exp Date";
+        sampleObj.equipmentName="Equipment Name";
+        sampleObj.manufacturer="Manufacturer";
+        sampleObj.model="Model";
+        sampleObj.serialNum="Serial Number";
         data.id = "1";
         data.operator = "Same level";
         data.obj = sampleObj;
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 for( Data fireBaseData : firebaseDataList ) {
                     Log.d("Test", "Id is: " + fireBaseData.id);
                     Log.d("Test", "Operator is: " + fireBaseData.operator);
-                    Log.d("Test", "Nes Val is: " + fireBaseData.obj.nestedVal);
+                    Log.d("Test", "Equipment Name is: " + fireBaseData.obj);
                 }
             }
 
@@ -133,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
                 Log.w("Test", "Failed to read value.", error.toException());
                 // TODO: Place a snackbar here said have issue on firebase, log it too
+                Snackbar snackbar2 = Snackbar.make(getWindow().getDecorView(),
+                        "There was a problem on database.", Snackbar.LENGTH_SHORT);
+                snackbar2.show();
             }
         });
 
