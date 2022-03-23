@@ -152,7 +152,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:inputType="date"
+        android:hint="Select date."
+        android:textSize="16sp"
+        android:clickable="true"
+        android:editable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeQuantity" />
 

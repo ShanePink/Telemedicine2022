@@ -1,7 +1,9 @@
 package com.example.iheartproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,22 +16,125 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.app.Activity;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class DiagnosticActivity extends AppCompatActivity {
 
     String[] type={"Ultrasound", "MRI", "PET Scanner", "CT Scanner", "X-Ray Machine"};
     String[] brand={"GE Healthcare", "Philips", "Siemens", "Toshiba (Canon Medical)"};
 
+    EditText expDateTbx;
+    DatePickerDialog picker;
+    EditText typeModelTbx;
+    EditText serialNoTbx;
+    EditText qtyTbx;
+
+    String modelName;
+    String serialNo;
+    Integer quantity;
+    String manufacturerBrand;
+    String diagnosticType;
+    String currentExpiryDate;
+
+    // COPY THIS TO YOUR ACTIVITY PAGE
+    public enum Equipment{
+        Diagnostic,
+        LifeSupport,
+        MedLab,
+        Monitor,
+        Therapeutic,
+        Treatment
+    }
+
+    public class EquipmentItem{
+        public String Uid;
+        public Equipment Equipment;
+        public String EquipmentType;
+        public String Brand;
+        public String Model;
+        public String SerialNo;
+        public Integer Qty;
+        public String ExpiryDate;
+
+        public EquipmentItem(){
+
+        }
+        public EquipmentItem(String uid, Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty,String expiryDate )
+        {
+            Uid = uid;
+            Equipment = eqp;
+            EquipmentType = equipmentType;
+            Brand = brand;
+            Model = model;
+            SerialNo = serialNo;
+            Qty = qty;
+            ExpiryDate = expiryDate;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnostic);
         setTitle("Diagnostic Equipment");
+
+        // DATABASE
+        // Connecting it to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://telemedicine2022-2137d-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        DatabaseReference myRef = database.getReference();
+        // Assign all the button with id
+        typeModelTbx = (EditText) findViewById(R.id.typeModel);
+        qtyTbx = (EditText) findViewById(R.id.typeQuantity);
+        serialNoTbx = (EditText) findViewById(R.id.typeSerialNum);
+        expDateTbx = (EditText) findViewById(R.id.typeDate);
+
+        expDateTbx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(DiagnosticActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                expDateTbx.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
 
         // Button
         /*Button btn = findViewById(R.id.routeBtn);
@@ -76,6 +181,7 @@ public class DiagnosticActivity extends AppCompatActivity {
             }
         };
 
+        // CAN COPY IF NEED TO ADD/ UPDATE DATA
         Button submitButton = (Button) findViewById(R.id.SubmitButton);
         submitButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -83,6 +189,24 @@ public class DiagnosticActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         // Instantiate destination fragment
                         Log.d("HomeFrag","Button Pressed!");
+
+                        // ASSIGN THE UI VALUE TO STRINGS
+                        String uuid = UUID.randomUUID().toString().replace("-", "");
+                        diagnosticType = dropdown1.getSelectedItem().toString();
+                        manufacturerBrand = dropdown2.getSelectedItem().toString();
+                        modelName = typeModelTbx.getText().toString();
+                        serialNo = serialNoTbx.getText().toString();
+                        quantity = Integer.valueOf(qtyTbx.getText().toString());
+                        currentExpiryDate = expDateTbx.getText().toString();
+
+                        // CREATE OBJECT WITH IT
+                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Diagnostic,diagnosticType,manufacturerBrand,modelName,serialNo,quantity,currentExpiryDate);
+
+                        // TO update the database
+                        // PUSH , get a new ref, then set/ save the value
+                        DatabaseReference newRef = myRef.child("MedicalEquipment").push();
+                        newRef.setValue(equipment);
+
 
                         startActivity(new Intent(DiagnosticActivity.this,
                                 MainActivity.class));
@@ -94,5 +218,74 @@ public class DiagnosticActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
+
+        // CAN COPY IF YOU NEED TO QUERY THE INFO
+        // Read from the database
+        myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // FETCHING EQUIPMENT ITEM LIST FROM FIREBASE
+                List<EquipmentItem> eqpList = new ArrayList<EquipmentItem>();
+
+                Map<String, EquipmentItem> td = (HashMap<String,EquipmentItem>) dataSnapshot.getValue();
+                List<Object> tdList = new ArrayList<Object>(td.values());
+                for(Object objectTd :tdList ){
+                    EquipmentItem eqpItem2 = new EquipmentItem();
+                    Map<String, String> item = (Map<String, String>) objectTd;
+                    for (Map.Entry<String,String> entry : item.entrySet()) {
+                        String key = entry.getKey();
+                        String value = String.valueOf(entry.getValue());
+
+                        if(key.equals("Equipment"))
+                            eqpItem2.Equipment = Equipment.valueOf(value);
+                        if(key.equals("Qty"))
+                            eqpItem2.Qty = Integer.valueOf(value);
+                        if(key.equals("ExpiryDate"))
+                            eqpItem2.ExpiryDate = value;
+                        if(key.equals("EquipmentType"))
+                            eqpItem2.EquipmentType = value;
+                        if(key.equals("SerialNo"))
+                            eqpItem2.SerialNo = value;
+                        if(key.equals("Brand"))
+                            eqpItem2.Brand = value;
+                        if(key.equals("Model"))
+                            eqpItem2.Model = value;
+                        if(key.equals("Uid"))
+                            eqpItem2.Uid = value;
+
+                        System.out.println(key);
+                        System.out.println(value);
+                        // do stuff
+                    }
+                    eqpList.add(eqpItem2);
+                }
+
+                System.out.println("LIST ITEM");
+                for(EquipmentItem item: eqpList){
+                    System.out.println(item.Brand);
+                    System.out.println(item.Equipment);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Test", "Failed to read value.", error.toException());
+                // TODO: Place a snackbar here said have issue on firebase, log it too
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),
+                        "There was a problem on database.", Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }
+        });
+
+
     }
+
+
+
+
+
 }

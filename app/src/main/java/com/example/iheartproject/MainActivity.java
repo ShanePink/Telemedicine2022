@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
     // TODO: Learn about how to implement firebase and how to use an Object  (very important)
     // This is the Object u would need to create, similar to a database table
     // Place your value inside, eg name, item, model those
@@ -46,24 +49,24 @@ public class MainActivity extends AppCompatActivity {
     }
     // U can do like a nested object, so u can categorize into one object based on ur type
     class SampleObject{
-        String quantity;
+        String qty;
         String expDate;
         String equipmentName;
         String manufacturer;
         String model;
-        String serialNum;
+        String serialNo;
     }
 
     // Sample Object, to test if we can put value inside the object
     public Data InstantiateObj(){
         Data data = new Data();
         SampleObject sampleObj = new SampleObject();
-        sampleObj.quantity="Quantity";
+        sampleObj.qty="Quantity";
         sampleObj.expDate="Exp Date";
         sampleObj.equipmentName="Equipment Name";
         sampleObj.manufacturer="Manufacturer";
         sampleObj.model="Model";
-        sampleObj.serialNum="Serial Number";
+        sampleObj.serialNo="Serial Number";
         data.id = "1";
         data.operator = "Same level";
         data.obj = sampleObj;
@@ -127,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // We log it to see what happen
                 // TODO : Populate ur UI with these info
-                for( Data fireBaseData : firebaseDataList ) {
-                    Log.d("Test", "Id is: " + fireBaseData.id);
-                    Log.d("Test", "Operator is: " + fireBaseData.operator);
-                    Log.d("Test", "Equipment Name is: " + fireBaseData.obj);
-                }
+//                for( Data fireBaseData : firebaseDataList ) {
+//                    Log.d("Test", "Id is: " + fireBaseData.id);
+//                    Log.d("Test", "Operator is: " + fireBaseData.operator);
+//                    Log.d("Test", "Equipment Name is: " + fireBaseData.obj);
+//                }
             }
 
             @Override
