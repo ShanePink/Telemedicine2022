@@ -10,6 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHeartProject">
         <activity
+            android:name=".UserSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectionTabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DonorUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".TherapeuticActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
@@ -63,7 +84,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

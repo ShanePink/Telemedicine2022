@@ -25,8 +25,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     // TODO: Learn about how to implement firebase and how to use an Object  (very important)
     // This is the Object u would need to create, similar to a database table
     // Place your value inside, eg name, item, model those

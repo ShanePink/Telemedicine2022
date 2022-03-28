@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper"
+    tools:context=".SelectionTabActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="450dp"
+        android:layout_height="250dp"
+        android:contentDescription="logo"
+        app:srcCompat="@drawable/logo2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/showAccountType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="218dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Choose Account Type"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/chooseHospital"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="Hospital Icon"
+        app:srcCompat="@drawable/hospital"
+        android:scaleType="centerInside"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/chooseDonor"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:contentDescription="Donor Icon"
+        android:scaleType="centerInside"
+        android:layout_marginEnd="20dp"
+        app:srcCompat="@drawable/donor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chooseHospital"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/hospital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Healthcare Providers"
+        android:textColor="#0E0E0E"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseHospital" />
+
+    <TextView
+        android:id="@+id/donor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="67dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Donors"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseDonor" />
+</androidx.constraintlayout.widget.ConstraintLayout>
