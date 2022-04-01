@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHeartProject">
         <activity
+            android:name=".RespondActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserSignUpActivity"
             android:exported="false" />
         <activity

@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/HospitalName"
+        android:id="@+id/hospitalName"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
@@ -39,7 +39,7 @@
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/hospitalUsername"
+        android:id="@+id/hospitalUserName"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -52,8 +52,8 @@
         android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:paddingBottom="10dp"
-        app:layout_constraintStart_toStartOf="@+id/HospitalName"
-        app:layout_constraintTop_toBottomOf="@+id/HospitalName"
+        app:layout_constraintStart_toStartOf="@+id/hospitalName"
+        app:layout_constraintTop_toBottomOf="@+id/hospitalName"
         app:layout_constraintWidth_percent=".8"
         tools:ignore="TextContrastCheck" />
 
@@ -71,8 +71,8 @@
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
         android:paddingBottom="10dp"
-        app:layout_constraintStart_toStartOf="@+id/hospitalUsername"
-        app:layout_constraintTop_toBottomOf="@+id/hospitalUsername"
+        app:layout_constraintStart_toStartOf="@+id/hospitalUserName"
+        app:layout_constraintTop_toBottomOf="@+id/hospitalUserName"
         app:layout_constraintWidth_percent=".8"
         tools:ignore="TextContrastCheck" />
 
