@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHeartProject">
         <activity
+            android:name=".HospitalListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalRequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".RespondActivity"
             android:exported="false" />
         <activity

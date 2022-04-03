@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/equipmentStatus">
 
         <TableRow
-            android:id="@+id/tablerow1"
+            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="UselessParent">
