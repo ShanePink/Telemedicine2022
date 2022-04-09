@@ -109,7 +109,7 @@ public class HospitalSignUpActivity extends AppCompatActivity {
 //                                        });
 
                                 // Create an user object (since user not hospital i set to false, and hospital name to null)
-                                User userObj = new User(user.getUid(), email, hospitalName , hospitalUserName, null, false);
+                                User userObj = new User(user.getUid(), email, hospitalName , hospitalUserName, null, true);
 
                                 // TODO: Why do this?
                                 // Firebase auth only can set email, photo, username

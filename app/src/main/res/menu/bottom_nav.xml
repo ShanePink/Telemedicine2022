@@ -12,7 +12,7 @@
         android:icon="@drawable/status"/>
     <item
         android:id="@+id/profileFragment"
-        android:title="Profile"
-        android:icon="@drawable/profile"/>
+        android:icon="@drawable/ic_baseline_more_horiz_24"
+        android:title="More" />
 
 </menu>

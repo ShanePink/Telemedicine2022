@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Hide Action Bar
+        getSupportActionBar().hide();
+
 
         // Invoke this in main, as it will be used globally
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_fragment);

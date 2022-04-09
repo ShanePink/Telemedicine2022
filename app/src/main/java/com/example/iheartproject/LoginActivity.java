@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -149,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +158,20 @@ public class LoginActivity extends AppCompatActivity {
         // Hide Action Bar
         getSupportActionBar().hide();
 
+        Button forgotPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        forgotPasswordButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        forgotPasswordButton.setPaintFlags(forgotPasswordButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                        startActivity(new Intent(LoginActivity.this,
+                                SelectionTabActivity.class));
+                        finish();
+                    }
+                }
+        );
 
         Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(
@@ -190,6 +204,8 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        registerButton.setPaintFlags(registerButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
                         startActivity(new Intent(LoginActivity.this,
                                 SelectionTabActivity.class));

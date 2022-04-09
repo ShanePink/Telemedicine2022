@@ -93,6 +93,7 @@ public class homeFragment extends Fragment {
             textView.setText(backValue);
         }*/
 
+
         Button diagnosticButton = (Button) inf.findViewById(R.id.DiagnosticButton);
         diagnosticButton.setOnClickListener(
                 new View.OnClickListener() {

@@ -6,45 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".RespondActivity">
 
-    <TextView
-        android:id="@+id/equipmentStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="80dp"
-        android:text="Equipment Status"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:text="You have donated:"
         android:textColor="#0B0B0B"
         android:textSize="18sp"
-        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/userDonatedList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:id="@+id/userDonatedList"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:layout_marginTop="50dp"
         android:stretchColumns="*"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/equipmentStatus">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -56,26 +44,26 @@
                 android:id="@+id/showEquipment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Equipment"
                 android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:textColor="#0B0B0B"/>
+                android:text="Equipment"
+                android:textColor="#0B0B0B"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/showQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity"
-                android:textSize="18sp"
-                android:textColor="#0B0B0B"/>
+                android:textColor="#0B0B0B"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/showStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"
-                android:textSize="18sp"
-                android:textColor="#0B0B0B"/>
+                android:textColor="#0B0B0B"
+                android:textSize="17sp" />
 
         </TableRow>
 
@@ -85,35 +73,35 @@
         android:id="@+id/showHospRequest"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:layout_marginTop="400dp"
         android:stretchColumns="*"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/userDonatedList">
 
         <TableRow
             android:id="@+id/table2row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="UselessParent" >
+            tools:ignore="UselessParent">
 
             <TextView
                 android:id="@+id/showEquipmentRequested"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Equipment Requested"
                 android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:textColor="#0B0B0B"/>
+                android:text="Equipment Requested"
+                android:textColor="#0B0B0B"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/showQuantityRequested"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity"
-                android:textSize="18sp"
-                android:textColor="#0B0B0B"/>
+                android:textColor="#0B0B0B"
+                android:textSize="17sp" />
 
         </TableRow>
 
@@ -124,14 +112,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
+       android:layout_marginBottom="50dp"
         android:text="Donate Now"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showHospRequest" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/showHospRequest"
+        app:layout_constraintVertical_bias="0.165" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

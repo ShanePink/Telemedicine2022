@@ -250,7 +250,7 @@ public class UserSignUpActivity extends AppCompatActivity {
                         confirmPassword = confirmPasswordTbx.getText().toString();
 
                         // Do Login Details Verification Here
-                        Login(email,password, confirmPassword, fullName, donorUserName, myRef);
+                        Login(email, password, confirmPassword, fullName, donorUserName, myRef);
 
 
                     }

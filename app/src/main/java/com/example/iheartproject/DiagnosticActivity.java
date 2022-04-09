@@ -87,7 +87,7 @@ public class DiagnosticActivity extends AppCompatActivity {
         public EquipmentItem(){
 
         }
-        public EquipmentItem(String uid, Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty,String expiryDate )
+        public EquipmentItem(String uid, Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate )
         {
             Uid = uid;
             Equipment = eqp;

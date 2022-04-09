@@ -10,14 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHeartProject">
         <activity
-            android:name=".HospitalListActivity"
+            android:name=".TermAndConditionActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".MoreActivity"
             android:exported="false" />
+        <activity
+            android:name=".ListViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HospitalListActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".HospitalRequestActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RespondActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".UserSignUpActivity"
             android:exported="false" />
@@ -32,10 +45,12 @@
             android:exported="false" />
         <activity
             android:name=".HospitalUserProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DonorUserProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
