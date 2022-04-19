@@ -10,6 +10,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,11 +34,35 @@ import java.util.UUID;
 
 public class MedLabActivity extends AppCompatActivity {
 
-    String[] type={"Microscopes", "Hematology Analyzers", "Blood Gas Analysers", "Autoclaves",
-            "Urinalysis Analyzers", "DNA Analyzers"};
-    String[] brand={"Abbott", "AmScope", "Beckman", "Benchmark", "Bio-Rad", "Illumina", "Leica",
-            "Nikon", "Mindray", "Nihon Kohden", "Olympus", "Omax", "Roche", "Siemens",
-            "Thermo Fisher", "Tuttnauer", "Zeiss", "Zirbus"};
+    EquipmentObj[] equipments = {
+            new EquipmentObj("Nikon", "Microscope"),
+            new EquipmentObj("Leica", "Microscope"),
+            new EquipmentObj("Zeiss", "Microscope"),
+            new EquipmentObj("Olympus", "Microscope"),
+            new EquipmentObj("Omax", "Microscope"),
+            new EquipmentObj("AmScope", "Microscope"),
+
+            new EquipmentObj("Beckman", "Haematology Analyser"),
+            new EquipmentObj("Abbott", "Haematology Analyser"),
+            new EquipmentObj("Siemens", "Haematology Analyser"),
+            new EquipmentObj("Bio-Rad", "Haematology Analyser"),
+            new EquipmentObj("Nihon Kohden", "Haematology Analyser"),
+
+            new EquipmentObj("Siemens", "Blood Gas Analyser"),
+            new EquipmentObj("Roche", "Blood Gas Analyser"),
+
+            new EquipmentObj("Tuttnauer", "Autoclave"),
+            new EquipmentObj("Benchmark", "Autoclave"),
+            new EquipmentObj("Zirbus", "Autoclave"),
+            new EquipmentObj("Thermofisher", "Autoclave"),
+
+            new EquipmentObj("Roche", "Urinalysis Analyser"),
+            new EquipmentObj("Siemens", "Urinalysis Analyser"),
+
+            new EquipmentObj("Thermo Fisher", "DNA Analyser")
+    };
+    String[] type= EquipmentObj.convertEquipmentListtoString(equipments);
+    String[] brand= {};
 
     EditText expDateTbx;
     DatePickerDialog picker;
@@ -53,46 +78,6 @@ public class MedLabActivity extends AppCompatActivity {
     String currentExpiryDate;
 
     String userEmail;
-
-    // COPY THIS TO YOUR ACTIVITY PAGE
-    public enum Equipment{
-        Diagnostic,
-        LifeSupport,
-        MedLab,
-        Monitor,
-        Therapeutic,
-        Treatment
-    }
-
-    public class EquipmentItem{
-        public String Uid;
-        public MedLabActivity.Equipment Equipment;
-        public String EquipmentType;
-        public String Brand;
-        public String Model;
-        public String SerialNo;
-        public Integer Qty;
-        public String ExpiryDate;
-        public String DonorEmail;
-        public boolean DonateStatus;
-
-        public EquipmentItem(){
-
-        }
-        public EquipmentItem(String uid, MedLabActivity.Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate, String donorEmail, boolean donateStatus)
-        {
-            Uid = uid;
-            Equipment = eqp;
-            EquipmentType = equipmentType;
-            Brand = brand;
-            Model = model;
-            SerialNo = serialNo;
-            Qty = qty;
-            ExpiryDate = expiryDate;
-            DonorEmail = donorEmail;
-            DonateStatus = donateStatus;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +129,8 @@ public class MedLabActivity extends AppCompatActivity {
                                 expDateTbx.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                //set expiry date for at least a year, so disabled dates
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() + 31556952000L);
                 picker.show();
             }
         });
@@ -165,6 +152,22 @@ public class MedLabActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, brand);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown2.setAdapter(adapter2);
+
+        dropdown1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                brand = EquipmentObj.filterEquipmentWithCategory(type[position], equipments);
+                ArrayAdapter<String> newAdapter2=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, brand);
+                newAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown2.setAdapter(newAdapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         InputFilter filter=new InputFilter() {
             @Override
@@ -219,7 +222,7 @@ public class MedLabActivity extends AppCompatActivity {
                 }
         );
 
-        // CAN COPY IF YOU NEED TO QUERY THE INFO
+        /*// CAN COPY IF YOU NEED TO QUERY THE INFO
         // Read from the database
         myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
             @Override
@@ -287,6 +290,6 @@ public class MedLabActivity extends AppCompatActivity {
                         "There was a problem on database.", Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
-        });
+        });*/
     }
 }

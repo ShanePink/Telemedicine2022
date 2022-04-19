@@ -9,6 +9,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,11 +33,44 @@ import java.util.UUID;
 
 public class LifeSupportActivity extends AppCompatActivity {
 
-    String[] type = {"Ventilators", "Incubator", "Anaesthetic Machine", "Heart-lung Machine", "ECMO",
-            "Dialysis Machine"};
-    String[] brand = {"Antech", "Avante", "Becton Dickinson", "Dräger", "Fisher & Paykel",
-            "Maquet (Getinge)", "GE Healthcare", "Hamilton", "LivaNova", "Medtronic", "Mindray",
-            "Penlon", "Philips", "Smiths", "Sorin", "Terumo Medical", "Thermo Scientific"};
+    EquipmentObj[] equipments = {
+            new EquipmentObj("Getinge", "Ventilators"),
+            new EquipmentObj("Hamilton", "Ventilators"),
+            new EquipmentObj("Dräger", "Ventilators"),
+            new EquipmentObj("Mindray", "Ultrasound"),
+            new EquipmentObj("Medtronic", "Ventilators"),
+            new EquipmentObj("GE", "Ventilators"),
+            new EquipmentObj("Philips", "Ventilators"),
+            new EquipmentObj("Smiths", "Ventilators"),
+            new EquipmentObj("Becton Dickinson", "Ventilators"),
+            new EquipmentObj("Fisher & paykel", "Ventilators"),
+            new EquipmentObj("Dräger", "Incubator"),
+
+            new EquipmentObj("Avante GE", "Anaesthetic Machine"),
+            new EquipmentObj("Dräger", "Anaesthetic Machine"),
+            new EquipmentObj("Maquet", "Anaesthetic Machine"),
+            new EquipmentObj("Penlon", "Anaesthetic Machine"),
+            new EquipmentObj("Mindray", "Anaesthetic Machine"),
+
+            new EquipmentObj("Terumo", "Heart Lung Machine"),
+            new EquipmentObj("LivaNova", "Heart Lung Machine"),
+            new EquipmentObj("Getinge", "Heart Lung Machine"),
+            new EquipmentObj("Medtronic", "Heart Lung Machine"),
+            new EquipmentObj("Maquet", "Heart Lung Machine"),
+
+            new EquipmentObj("Getinge", "ECMO"),
+            new EquipmentObj("LivaNova", "ECMO"),
+            new EquipmentObj("Medtronic ", "ECMO"),
+            new EquipmentObj("Sorin", "ECMO"),
+            new EquipmentObj("Terumo", "ECMO"),
+
+            new EquipmentObj("Baxter", "Dialysis Machine"),
+            new EquipmentObj("Fresenius", "Dialysis Machine"),
+            new EquipmentObj("B braun", "Dialysis Machine"),
+            new EquipmentObj("Medtronic ", "Dialysis Machine"),
+    };
+    String[] type= EquipmentObj.convertEquipmentListtoString(equipments);
+    String[] brand= {};
 
     EditText expDateTbx;
     DatePickerDialog picker;
@@ -52,47 +86,6 @@ public class LifeSupportActivity extends AppCompatActivity {
     String currentExpiryDate;
 
     String userEmail;
-
-    // COPY THIS TO YOUR ACTIVITY PAGE
-    public enum Equipment {
-        Diagnostic,
-        LifeSupport,
-        MedLab,
-        Monitor,
-        Therapeutic,
-        Treatment
-    }
-
-    public class EquipmentItem {
-        public String Uid;
-        public Equipment Equipment;
-        public String EquipmentType;
-        public String Brand;
-        public String Model;
-        public String SerialNo;
-        public Integer Qty;
-        public String ExpiryDate;
-        public String DonorEmail;
-        public boolean DonateStatus;
-
-        public EquipmentItem() {
-
-        }
-
-        public EquipmentItem(String uid, LifeSupportActivity.Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate, String donorEmail, boolean donateStatus)
-        {
-            Uid = uid;
-            Equipment = eqp;
-            EquipmentType = equipmentType;
-            Brand = brand;
-            Model = model;
-            SerialNo = serialNo;
-            Qty = qty;
-            ExpiryDate = expiryDate;
-            DonorEmail = donorEmail;
-            DonateStatus = donateStatus;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +140,8 @@ public class LifeSupportActivity extends AppCompatActivity {
                                 expDateTbx.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                //set expiry date for at least a year, so disabled dates
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() + 31556952000L);
                 picker.show();
             }
         });
@@ -162,6 +157,22 @@ public class LifeSupportActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, brand);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown2.setAdapter(adapter2);
+
+        dropdown1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                brand = EquipmentObj.filterEquipmentWithCategory(type[position], equipments);
+                ArrayAdapter<String> newAdapter2=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, brand);
+                newAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown2.setAdapter(newAdapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         InputFilter filter = new InputFilter() {
             @Override
@@ -213,7 +224,7 @@ public class LifeSupportActivity extends AppCompatActivity {
                 }
         );
 
-        // CAN COPY IF YOU NEED TO QUERY THE INFO
+        /*// CAN COPY IF YOU NEED TO QUERY THE INFO
         // Read from the database
         myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
             @Override
@@ -281,7 +292,7 @@ public class LifeSupportActivity extends AppCompatActivity {
                         "There was a problem on database.", Snackbar.LENGTH_SHORT);
                 snackbar1.show();
             }
-        });
+        });*/
 
         // Setup a submit button listener
 

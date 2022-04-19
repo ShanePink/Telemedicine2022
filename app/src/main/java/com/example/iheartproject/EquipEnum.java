@@ -1,0 +1,29 @@
+package com.example.iheartproject;
+
+public enum EquipEnum {
+    ULTRASOUND,
+    MRI,
+    PET,
+    CTSCANNER,
+    XRAYMACHINE,
+    INFUSIONPUMP,
+    MEDICALLASER,
+    LASIKSURGICAL,
+    VENTILATORS,
+    INCUBATOR,
+    HEARTLUNG,
+    ECMO,
+    DIALYSIS,
+    ECH,
+    EGG,
+    BLOODPRESSUREMONITOR,
+    PULSEOXIMETER,
+    MIRCOSCOPES,
+    BLOODGASANALYSER,
+    URINALYSIS,
+    DNAANALYZER,
+    WHEELCHAIRS,
+    BEDS,
+    INSULINPUMP,
+    NEBULIZERS
+}

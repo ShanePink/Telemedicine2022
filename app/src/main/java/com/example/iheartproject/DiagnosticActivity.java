@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -49,8 +50,29 @@ import java.util.UUID;
 
 public class DiagnosticActivity extends AppCompatActivity {
 
-    String[] type={"Ultrasound", "MRI", "PET Scanner", "CT Scanner", "X-Ray Machine"};
-    String[] brand={"GE Healthcare", "Philips", "Siemens", "Toshiba (Canon Medical)"};
+    EquipmentObj[] equipments = {
+            new EquipmentObj("GE", "Ultrasound"),
+            new EquipmentObj("Philips", "Ultrasound"),
+            new EquipmentObj("Siemens", "Ultrasound"),
+            new EquipmentObj("Toshiba", "Ultrasound"),
+            new EquipmentObj("GE", "MRI"),
+            new EquipmentObj("Philips", "MRI"),
+            new EquipmentObj("Siemens", "MRI"),
+            new EquipmentObj("Toshiba", "MRI"),
+            new EquipmentObj("GE", "PET"),
+            new EquipmentObj("Philips", "PET"),
+            new EquipmentObj("Siemens", "PET"),
+            new EquipmentObj("GE", "PET"),
+            new EquipmentObj("Philips", "CT SCANNER"),
+            new EquipmentObj("Siemens", "CT SCANNER"),
+            new EquipmentObj("Toshiba", "CT SCANNER"),
+            new EquipmentObj("GE", "XRAY MACHINE"),
+            new EquipmentObj("Philips", "XRAY MACHINE"),
+            new EquipmentObj("Siemens", "XRAY MACHINE"),
+            new EquipmentObj("Toshiba", "XRAY MACHINE")
+    };
+    String[] type = EquipmentObj.convertEquipmentListtoString(equipments);
+    String[] brand = {};
 
     EditText expDateTbx;
     DatePickerDialog picker;
@@ -119,6 +141,8 @@ public class DiagnosticActivity extends AppCompatActivity {
                                 expDateTbx.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                //set expiry date for at least a year, so disabled dates
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() + 31556952000L);
                 picker.show();
             }
         });
@@ -135,6 +159,22 @@ public class DiagnosticActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, brand);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown2.setAdapter(adapter2);
+
+        dropdown1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                brand = EquipmentObj.filterEquipmentWithCategory(type[position], equipments);
+                ArrayAdapter<String> newAdapter2=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, brand);
+                newAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown2.setAdapter(newAdapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         InputFilter filter = new InputFilter() {
             @Override

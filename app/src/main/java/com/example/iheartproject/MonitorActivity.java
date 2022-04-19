@@ -10,6 +10,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,9 +34,25 @@ import java.util.UUID;
 
 public class MonitorActivity extends AppCompatActivity {
 
-    String[] type={"ECG", "EEG", "Blood Pressure Monitor", "Pulse Oximeter"};
-    String[] brand={"Advanced Brain Monitoring", "Allengers", "Comen", "GE Healthcare", "Mindray",
-            "Nihon Kohden", "Omron", "Philips", "Rossmax", "Welch Allyn"};
+    EquipmentObj[] equipments = {
+            new EquipmentObj("GE", "ECG"),
+            new EquipmentObj("Mindray", "ECG"),
+            new EquipmentObj("Nihon Kohden", "ECG"),
+            new EquipmentObj("Philips", "ECG"),
+            new EquipmentObj("Comen", "ECG"),
+
+            new EquipmentObj("Advanced Brain Monitoring", "EEG"),
+            new EquipmentObj("Allengers", "EEG"),
+            new EquipmentObj("Nihon Kohden", "EEG"),
+
+            new EquipmentObj("Omron", "Blood Pressure Monitor"),
+
+            new EquipmentObj("Welch Allyn", "Pulse Oximeter"),
+            new EquipmentObj("Rossmax", "Pulse Oximeter"),
+    };
+
+    String[] type= EquipmentObj.convertEquipmentListtoString(equipments);
+    String[] brand= {};
 
     EditText expDateTbx;
     DatePickerDialog picker;
@@ -51,46 +68,6 @@ public class MonitorActivity extends AppCompatActivity {
     String currentExpiryDate;
 
     String userEmail;
-
-    // COPY THIS TO YOUR ACTIVITY PAGE
-    public enum Equipment{
-        Diagnostic,
-        LifeSupport,
-        MedLab,
-        Monitor,
-        Therapeutic,
-        Treatment
-    }
-
-    public class EquipmentItem{
-        public String Uid;
-        public MonitorActivity.Equipment Equipment;
-        public String EquipmentType;
-        public String Brand;
-        public String Model;
-        public String SerialNo;
-        public Integer Qty;
-        public String ExpiryDate;
-        public String DonorEmail;
-        public boolean DonateStatus;
-
-        public EquipmentItem(){
-
-        }
-        public EquipmentItem(String uid, MonitorActivity.Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate, String donorEmail, boolean donateStatus)
-        {
-            Uid = uid;
-            Equipment = eqp;
-            EquipmentType = equipmentType;
-            Brand = brand;
-            Model = model;
-            SerialNo = serialNo;
-            Qty = qty;
-            ExpiryDate = expiryDate;
-            DonorEmail = donorEmail;
-            DonateStatus = donateStatus;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +119,8 @@ public class MonitorActivity extends AppCompatActivity {
                                 expDateTbx.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                //set expiry date for at least a year, so disabled dates
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() + 31556952000L);
                 picker.show();
             }
         });
@@ -163,6 +142,22 @@ public class MonitorActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, brand);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown2.setAdapter(adapter2);
+
+        dropdown1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                brand = EquipmentObj.filterEquipmentWithCategory(type[position], equipments);
+                ArrayAdapter<String> newAdapter2=new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, brand);
+                newAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dropdown2.setAdapter(newAdapter2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         InputFilter filter=new InputFilter() {
             @Override
@@ -217,7 +212,7 @@ public class MonitorActivity extends AppCompatActivity {
                 }
         );
 
-        // CAN COPY IF YOU NEED TO QUERY THE INFO
+        /*// CAN COPY IF YOU NEED TO QUERY THE INFO
         // Read from the database
         myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
             @Override
@@ -285,6 +280,6 @@ public class MonitorActivity extends AppCompatActivity {
                         "There was a problem on database.", Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
-        });
+        });*/
     }
 }
