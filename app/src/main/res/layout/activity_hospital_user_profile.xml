@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper5"
     tools:context=".HospitalUserProfileActivity">
 
     <TextView
@@ -15,8 +16,8 @@
         android:layout_marginEnd="15dp"
         android:fontFamily="sans-serif-black"
         android:text="Hospital Profile"
-        android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textColor="#242B55"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -37,10 +38,10 @@
         app:srcCompat="@drawable/hospital" />
 
     <EditText
-        android:id="@+id/hospitalName"
+        android:id="@+id/updateHospitalName"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Hospital Name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -57,10 +58,10 @@
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/hospitalUsername"
+        android:id="@+id/updateHospitalUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Username"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -73,16 +74,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hospitalName"
+        app:layout_constraintTop_toBottomOf="@+id/updateHospitalName"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".8"
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/updateEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
@@ -95,7 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hospitalUsername"
+        app:layout_constraintTop_toBottomOf="@+id/updateHospitalUserName"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".8"
         tools:ignore="TextContrastCheck" />
@@ -107,10 +108,12 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/round_button"
         android:text="Save"
+        android:backgroundTint="#8C9EFF"
+        android:fontFamily="sans-serif-black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/updateEmail"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".8" />
 

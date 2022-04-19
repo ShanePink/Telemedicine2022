@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper"
+    android:background="@drawable/wallpaper2"
     tools:context=".SelectionTabActivity">
 
     <ImageView
@@ -21,12 +21,12 @@
         android:id="@+id/showAccountType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="218dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="sans-serif-black"
         android:text="Choose Account Type"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +36,7 @@
         android:layout_height="170dp"
         android:layout_marginTop="30dp"
         android:contentDescription="Hospital Icon"
+        android:background="@drawable/edit_text_greybackground"
         app:srcCompat="@drawable/hospital"
         android:scaleType="centerInside"
         android:layout_marginStart="20dp"
@@ -48,6 +49,7 @@
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:contentDescription="Donor Icon"
+        android:background="@drawable/edit_text_greybackground"
         android:scaleType="centerInside"
         android:layout_marginEnd="20dp"
         app:srcCompat="@drawable/donor"
@@ -59,11 +61,11 @@
         android:id="@+id/hospital"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_marginStart="28dp"
+        android:fontFamily="sans-serif"
         android:text="Healthcare Providers"
         android:textColor="#0E0E0E"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseHospital" />
 
@@ -71,11 +73,11 @@
         android:id="@+id/donor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="67dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_marginEnd="80dp"
+        android:fontFamily="sans-serif"
         android:text="Donors"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseDonor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.iheartproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,6 +65,7 @@ public class statusFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,23 @@ public class statusFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        View inf = inflater.inflate(R.layout.fragment_status, container, false);
+
+        Button inventory = (Button) inf.findViewById(R.id.inventory);
+        inventory.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), InventoryActivity.class));
+                    }
+                }
+        );
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://telemedicine2022-2137d-default-rtdb.asia-southeast1.firebasedatabase.app/");
         DatabaseReference myRef = database.getReference();
@@ -79,19 +99,18 @@ public class statusFragment extends Fragment {
         FirebaseUser user = tmAuth.getCurrentUser();
         myRef.child("users").child("test").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task2) {
-                if (!task2.isSuccessful()) {
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(!task.isSuccessful()) {
                     // If not successful, we stop the process
-                    Log.e("firebase", "Error getting data", task2.getException());
+                    Log.e("firebase", "Error getting data.", task.getException());
                     return;
                 } else {
                     // If successful, we parse the value
-                    Log.d("firebase", String.valueOf(task2.getResult().getValue()));
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
 
                     List<User> userList = new ArrayList<>();
                     User currentUser = null;
-                    // Basically, we get the child of the data one by one, parse and insert to our object list
-                    for (DataSnapshot ds : task2.getResult().getChildren()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
                         // Parse the whole row of firebase data into our object, and add into list
                         User userObj = ds.getValue(User.class);
                         userList.add(userObj);
@@ -101,7 +120,7 @@ public class statusFragment extends Fragment {
                     for (User userObj : userList) {
                         // Try to match if user info is same as firebase realtime
                         if (user.getEmail().equals(userObj.Email)) {
-                            Log.d("firebase", "User email match");
+                            Log.d("firebase", "User email match.");
                             currentUser = userObj;
                             break;
                         }
@@ -109,41 +128,42 @@ public class statusFragment extends Fragment {
 
                     // Check if user exist
                     if (currentUser == null) {
-                        Log.e("firebase", "Unable to find user info in firebase");
+                        Log.e("firebase", "Unable to find user info in firebase.");
                         return;
                     } else {
                         if (currentUser.isHospital) {
-                            Intent i = new Intent(getActivity(), HospitalRequestActivity.class);
-                            startActivity(i);
-                            ((Activity) getActivity()).overridePendingTransition(0, 0);
+                            Button status = (Button) inf.findViewById(R.id.status);
+                            status.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("Status Frag", "Button Pressed!");
+                                    Intent i = new Intent(getActivity(), HospitalRequestActivity.class);
+                                    startActivity(i);
+                                    ((Activity) getActivity()).overridePendingTransition(0, 0);
+                                }
+                            });
                         } else {
-                            Intent i = new Intent(getActivity(), RespondActivity.class);
+                            Button status = (Button) inf.findViewById(R.id.status);
+                            status.setVisibility(View.GONE);
+                            /*Intent i = new Intent(getActivity(), RespondActivity.class);
                             startActivity(i);
                             getActivity().getFragmentManager().popBackStack();
-                            ((Activity) getActivity()).overridePendingTransition(0, 0);
+                            ((Activity) getActivity()).overridePendingTransition(0, 0);*/
                         }
                     }
-
-
                 }
             }
-
         });
+        return inf;
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         Intent i = new Intent(getActivity(), MainActivity.class);
         startActivity(i);
         getActivity().getFragmentManager().popBackStack();
         ((Activity) getActivity()).overridePendingTransition(0, 0);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_status, container, false);
-    }
+    }*/
 }

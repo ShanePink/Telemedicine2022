@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +50,8 @@ public class TherapeuticActivity extends AppCompatActivity {
     String therapeuticType;
     String currentExpiryDate;
 
+    String userEmail;
+
     // COPY THIS TO YOUR ACTIVITY PAGE
     public enum Equipment{
         Diagnostic,
@@ -68,11 +71,13 @@ public class TherapeuticActivity extends AppCompatActivity {
         public String SerialNo;
         public Integer Qty;
         public String ExpiryDate;
+        public String DonorEmail;
+        public boolean DonateStatus;
 
         public EquipmentItem(){
 
         }
-        public EquipmentItem(String uid, TherapeuticActivity.Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate )
+        public EquipmentItem(String uid, TherapeuticActivity.Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate, String donorEmail, boolean donateStatus)
         {
             Uid = uid;
             Equipment = eqp;
@@ -82,6 +87,8 @@ public class TherapeuticActivity extends AppCompatActivity {
             SerialNo = serialNo;
             Qty = qty;
             ExpiryDate = expiryDate;
+            DonorEmail = donorEmail;
+            DonateStatus = donateStatus;
         }
     }
 
@@ -90,6 +97,25 @@ public class TherapeuticActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_therapeutic);
         setTitle("Therapeutic Equipment");
+
+        // Fetch intent info
+        String userEmailJson = getIntent().getStringExtra("userEmail");
+        if (userEmailJson == null)
+        {
+            Log.d("Therapeutic","No email found");
+        }
+        else
+        {
+            // Convert the json to plain string
+            userEmail = new Gson().fromJson(userEmailJson,String.class);
+            if(userEmail == null)
+            {
+                Log.d("Therapeutic","No email found");
+            }
+            else
+                Log.d("Therapeutic",userEmail);
+            // Perform any action here
+        }
 
         // DATABASE
         // Connecting it to the database
@@ -171,7 +197,9 @@ public class TherapeuticActivity extends AppCompatActivity {
                         currentExpiryDate = expDateTbx.getText().toString();
 
                         // CREATE OBJECT WITH IT
-                        TherapeuticActivity.EquipmentItem equipment = new TherapeuticActivity.EquipmentItem(uuid, TherapeuticActivity.Equipment.Therapeutic,therapeuticType,manufacturerBrand,modelName,serialNo,quantity,currentExpiryDate);
+                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Therapeutic, therapeuticType,
+                                manufacturerBrand, modelName, serialNo, quantity,
+                                currentExpiryDate, userEmail, false);
 
                         // TO update the database
                         // PUSH , get a new ref, then set/ save the value
@@ -195,18 +223,18 @@ public class TherapeuticActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // FETCHING EQUIPMENT ITEM LIST FROM FIREBASE
-                List<TherapeuticActivity.EquipmentItem> eqpList = new ArrayList<TherapeuticActivity.EquipmentItem>();
+                List<EquipmentItem> eqpList = new ArrayList<TherapeuticActivity.EquipmentItem>();
 
-                Map<String, TherapeuticActivity.EquipmentItem> td = (HashMap<String, TherapeuticActivity.EquipmentItem>) dataSnapshot.getValue();
+                Map<String, EquipmentItem> td = (HashMap<String, EquipmentItem>) dataSnapshot.getValue();
                 List<Object> tdList = new ArrayList<Object>(td.values());
                 for(Object objectTd :tdList ){
-                    TherapeuticActivity.EquipmentItem eqpItem2 = new TherapeuticActivity.EquipmentItem();
+                    EquipmentItem eqpItem2 = new EquipmentItem();
                     Map<String, String> item = (Map<String, String>) objectTd;
                     for (Map.Entry<String,String> entry : item.entrySet()) {
                         String key = entry.getKey();
                         String value = String.valueOf(entry.getValue());
 
-                        if(key.equals("Equipment"))
+                        if(key.equals("com.example.iheartproject.Equipment"))
                             eqpItem2.Equipment = TherapeuticActivity.Equipment.valueOf(value);
                         if(key.equals("Qty"))
                             eqpItem2.Qty = Integer.valueOf(value);
@@ -230,10 +258,20 @@ public class TherapeuticActivity extends AppCompatActivity {
                     eqpList.add(eqpItem2);
                 }
 
+                ArrayList<EquipmentItem> currentDonorItemList = new ArrayList<>();
+                // Looping the list
                 System.out.println("LIST ITEM");
-                for(TherapeuticActivity.EquipmentItem item: eqpList){
+                for(EquipmentItem item: eqpList){
                     System.out.println(item.Brand);
                     System.out.println(item.Equipment);
+                    System.out.println(item.DonorEmail);
+                    // To acquire only the specific donor item
+                    // Check if the email is same with current user email
+                    if (item.DonorEmail == userEmail)
+                    {
+                        // Add into current donor item list
+                        currentDonorItemList.add(item);
+                    }
                 }
 
             }

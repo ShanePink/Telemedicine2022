@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/wallpaper2"
     tools:context=".MoreActivity">
 
 
@@ -12,10 +13,13 @@
         android:id="@+id/userProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="User Profile"
         android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif-black"
         android:background="@android:color/transparent"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/termsOfService"
@@ -24,7 +28,9 @@
         android:text="Terms of Service"
         android:gravity="left|center_vertical"
         android:background="@android:color/transparent"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp"/>
 
     <Button
         android:id="@+id/contactUs"
@@ -33,7 +39,9 @@
         android:text="Contact Us"
         android:gravity="left|center_vertical"
         android:background="@android:color/transparent"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/logOut"
@@ -42,5 +50,7 @@
         android:text="Log Out"
         android:gravity="left|center_vertical"
         android:background="@android:color/transparent"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp" />
 </LinearLayout>

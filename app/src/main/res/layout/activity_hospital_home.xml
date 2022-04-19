@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cde6f9"
+    tools:context=".HospitalHomeActivity">
+
+    <TextView
+        android:id="@+id/showMessage"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="Hi! I would like to request some medical equipments: "
+        android:layout_marginTop="30dp"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/messageTextBox"
+        android:layout_width="329dp"
+        android:layout_height="348dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/edit_text_greybackground"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:gravity="top"
+        android:padding="10dp"
+        android:hint="Type your request here."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showMessage" />
+
+    <Button
+        android:id="@+id/sendEmailButton"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/round_button"
+        android:text="Send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextBox"
+        app:layout_constraintVertical_bias="0.258" />
+</androidx.constraintlayout.widget.ConstraintLayout>

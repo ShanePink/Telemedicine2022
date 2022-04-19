@@ -3,6 +3,7 @@ package com.example.iheartproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -120,9 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                                             // We parsing user object into json, so that we can pass it to other activities
                                             Gson gson = new Gson();
                                             String userJson = gson.toJson(currentUser);
-
+                                            String userEmailJson = gson.toJson(currentUser.Email);
                                             // Assign ur information to new intent, with a key
                                             newIntent.putExtra("user", userJson);
+                                            newIntent.putExtra("userEmail", userEmailJson);
+                                            newIntent.putExtra("userFullName", currentUser.FullName);
 
                                             startActivity(newIntent);
 
@@ -167,8 +170,8 @@ public class LoginActivity extends AppCompatActivity {
                         forgotPasswordButton.setPaintFlags(forgotPasswordButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
                         startActivity(new Intent(LoginActivity.this,
-                                SelectionTabActivity.class));
-                        finish();
+                                ForgetPasswordActivity.class));
+//                        finish();
                     }
                 }
         );
@@ -194,7 +197,6 @@ public class LoginActivity extends AppCompatActivity {
                         password = passwordTbx.getText().toString();
 
                         Login(email,password);
-
                     }
                 }
         );
@@ -214,4 +216,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
         );
     }
+
 }

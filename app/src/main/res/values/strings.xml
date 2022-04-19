@@ -8,12 +8,98 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string-array name="diagnostic_array">
+    <string-array name="equipmentType_option">
         <item>Ultrasound</item>
         <item>MRI</item>
         <item>PET Scanner</item>
         <item>CT Scanner</item>
         <item>X-Ray Machine</item>
+        <item>Ventilators</item>
+        <item>Incubator</item>
+        <item>Anaesthetic Machine</item>
+        <item>Heart-lung Machine</item>
+        <item>ECMO</item>
+        <item>Dialysis Machine</item>
+        <item>Incubator</item>
+        <item>Microscopes</item>
+        <item>Hematology Analyzers</item>
+        <item>Blood Gas Analysers</item>
+        <item>Autoclaves</item>
+        <item>Urinalysis Analyzers</item>
+        <item>DNA Analyzers</item>
+        <item>ECG</item>
+        <item>EEG</item>
+        <item>Blood Pressure Monitor</item>
+        <item>Pulse Oximeter</item>
+        <item>Wheelchairs</item>
+        <item>Hospital Beds</item>
+        <item>Insulin Pumps</item>
+        <item>Nebulizers</item>
+        <item>Infusion Pump</item>
+        <item>Medical Lasers</item>
+        <item>LASIK surgical machines</item>
+
+
+    </string-array>
+    <string-array name="brand_option">
+        <item>Abbott</item>
+        <item>Advanced Brain Monitoring</item>
+        <item>Alcon</item>
+        <item>Allengers</item>
+        <item>Allied Healthcare</item>
+        <item>AmScope</item>
+        <item>Antech</item>
+        <item>Apex</item>
+        <item>Avante</item>
+        <item>Bausch and Lomb</item>
+        <item>Baxter</item>
+        <item>Beckman</item>
+        <item>Becton Dickinson</item>
+        <item>Benchmark</item>
+        <item>Bio-Rad</item>
+        <item>Boston Scientific</item>
+        <item>B Braun</item>
+        <item>Comen</item>
+        <item>Dräger</item>
+        <item>Fisher and Paykel</item>
+        <item>Fresenius Kabi</item>
+        <item>GE Healthcare</item>
+        <item>Hamilton</item>
+        <item>Illumina</item>
+        <item>Leica</item>
+        <item>LivaNova</item>
+        <item>LKL</item>
+        <item>Maquet (Getinge)</item>
+        <item>Meditec</item>
+        <item>Medtronic</item>
+        <item>Meyra</item>
+        <item>Mindray</item>
+        <item>Nidek</item>
+        <item>Nikon</item>
+        <item>Nihon Kohden</item>
+        <item>Olympus</item>
+        <item>Omax</item>
+        <item>Omnipod</item>
+        <item>Omron</item>
+        <item>Oxford Lasers</item>
+        <item>Paramount</item>
+        <item>Penlon</item>
+        <item>Philips</item>
+        <item>Roche</item>
+        <item>Rossmax</item>
+        <item>Siemens</item>
+        <item>Simtek</item>
+        <item>Smiths</item>
+        <item>Sorin</item>
+        <item>Stryker</item>
+        <item>Terumo Medical</item>
+        <item>Thermo Scientific</item>
+        <item>Toshiba (Canon Medical)</item>
+        <item>Tuttnauer</item>
+        <item>Welch Allyn</item>
+        <item>VISX</item>
+        <item>Zeiss</item>
+        <item>Zirbus</item>
     </string-array>
 
     <string name="hello_first_fragment">Hello first fragment</string>

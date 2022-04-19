@@ -11,7 +11,9 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,10 +50,11 @@ public class HospitalSignUpActivity extends AppCompatActivity {
     private String password;
     private String confirmPassword;
     private String hospitalName;
+    private CheckBox checkBox;
     String TAG = "HospitalSignUpActivity";
 
     // Can copy straight
-    private void Login(String email, String password, String confirmPassword, String hospitalName, String hospitalUserName, DatabaseReference myRef){
+    private void Login(String email, String password, String confirmPassword, String hospitalName, String hospitalUserName, boolean termsChecked, DatabaseReference myRef){
         try
         {
             // Validate the user information
@@ -65,6 +68,12 @@ public class HospitalSignUpActivity extends AppCompatActivity {
             // Check if user key in identical password
             if (!password.equals(confirmPassword)){
                 Toast.makeText(HospitalSignUpActivity.this, "Confirm password is not identical to password",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(termsChecked == false){
+                Toast.makeText(HospitalSignUpActivity.this, "Please accept terms and condition.",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -170,6 +179,7 @@ public class HospitalSignUpActivity extends AppCompatActivity {
         emailTbx = (EditText) findViewById(R.id.email);
         passwordTbx = (EditText) findViewById(R.id.password);
         confirmPasswordTbx = (EditText) findViewById(R.id.confirmPassword);
+        checkBox = findViewById(R.id.termsConditionCheckBoxHospital);
 
         // DATABASE
         // Connecting it to the database
@@ -235,6 +245,17 @@ public class HospitalSignUpActivity extends AppCompatActivity {
                     }
                 });
 
+        TextView termsCondition = findViewById(R.id.termsConditionLinkHospital);
+        termsCondition.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(HospitalSignUpActivity.this,
+                                TermAndConditionActivity.class));
+                    }
+                }
+        );
+
 
         Button signUpButton = (Button) findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(
@@ -248,9 +269,10 @@ public class HospitalSignUpActivity extends AppCompatActivity {
                         email = emailTbx.getText().toString();
                         password = passwordTbx.getText().toString();
                         confirmPassword = confirmPasswordTbx.getText().toString();
+                        boolean termsChecked = checkBox.isChecked();
 
                         // Do Login Details Verification Here
-                        Login(email,password, confirmPassword, hospitalName, hospitalUserName, myRef);
+                        Login(email,password, confirmPassword, hospitalName, hospitalUserName, termsChecked, myRef);
 
 
                     }

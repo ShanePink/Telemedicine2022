@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#cde6f9"
     tools:context=".TherapeuticActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif"
         android:text="Equipment:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
         android:text="Brand/Manufacturer:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
         android:text="Model:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
         android:text="Serial Number:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
         android:text="Quantity:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
         android:text="Expiration Date:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -147,12 +154,15 @@
 
     <Button
         android:id="@+id/SubmitButton"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="#8C9EFF"
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

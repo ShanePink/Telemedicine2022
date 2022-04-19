@@ -33,3 +33,4 @@
 # Add your class here, this will allow firebase to parse ur object
 -keep class com.example.iheartproject.User
 -keep class com.example.iheartproject.Hospital
+-keep class com.example.iheartproject.DiagnosticActivity$EquipmentItem

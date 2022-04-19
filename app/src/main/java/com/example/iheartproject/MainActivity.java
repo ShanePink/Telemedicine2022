@@ -1,16 +1,27 @@
 package com.example.iheartproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         return data;
     }
 
+    public String currentUserEmail;
+    public String currentUserFullName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +100,28 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
         NavigationUI.setupWithNavController(bottomNav, navController);
+
+
+        currentUserEmail = getIntent().getStringExtra("userEmail");
+        if(currentUserEmail == null)
+        {
+            Log.d("Main","No email found");
+        }
+        else
+        {
+            Log.d("Main",currentUserEmail);
+            // Perform any action here
+        }
+        currentUserFullName = getIntent().getStringExtra("userFullName");
+        if(currentUserFullName == null)
+        {
+            Log.d("Main","No email found");
+        }
+        else
+        {
+            Log.d("Main",currentUserFullName);
+            // Perform any action here
+        }
 
 
         // Write a message to the database
@@ -134,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 //                for( Data fireBaseData : firebaseDataList ) {
 //                    Log.d("Test", "Id is: " + fireBaseData.id);
 //                    Log.d("Test", "Operator is: " + fireBaseData.operator);
-//                    Log.d("Test", "Equipment Name is: " + fireBaseData.obj);
+//                    Log.d("Test", "com.example.iheartproject.Equipment Name is: " + fireBaseData.obj);
 //                }
             }
 
@@ -158,5 +194,252 @@ public class MainActivity extends AppCompatActivity {
         // TODO : Learn how to try catch, and test if onCancelled would handle the setValue error
         myRef.setValue(dataJson);
 
+
+
+
+
+        DatabaseReference reference = database.getReference();
+        // Connecting it to the firebase authentication database
+        FirebaseAuth tmAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = tmAuth.getCurrentUser();
+        reference.child("users").child("test").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(!task.isSuccessful()) {
+                    // If not successful, we stop the process
+                    Log.e("firebase", "Error getting data.", task.getException());
+                    return;
+                } else {
+                    // If successful, we parse the value
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+
+                    List<User> userList = new ArrayList<>();
+                    User currentUser = null;
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        // Parse the whole row of firebase data into our object, and add into list
+                        User userObj = ds.getValue(User.class);
+                        userList.add(userObj);
+                    }
+
+                    // Loop again to match user
+                    for (User userObj : userList) {
+                        // Try to match if user info is same as firebase realtime
+                        if (user.getEmail().equals(userObj.Email)) {
+                            Log.d("firebase", "User email match.");
+                            currentUser = userObj;
+                            break;
+                        }
+                    }
+
+                    // Check if user exist
+                    if (currentUser == null) {
+                        Log.e("firebase", "Unable to find user info into firebase.");
+                        return;
+                    } else {
+                        if (currentUser.isHospital) {
+                            CardView diagnosticCV =  (CardView) findViewById(R.id.DiagnosticButton);
+                            diagnosticCV.setVisibility(View.GONE);
+
+                            CardView treatmentCV =  (CardView) findViewById(R.id.TreatmentButton);
+                            treatmentCV.setVisibility(View.GONE);
+
+                            CardView lifeSupportCV =  (CardView) findViewById(R.id.LifeSupportButton);
+                            lifeSupportCV.setVisibility(View.GONE);
+
+                            CardView monitorCV =  (CardView) findViewById(R.id.MonitorButton);
+                            monitorCV.setVisibility(View.GONE);
+
+                            CardView medLabCV =  (CardView) findViewById(R.id.MedLabButton);
+                            medLabCV.setVisibility(View.GONE);
+
+                            CardView therapeuticCV =  (CardView) findViewById(R.id.TherapeuticButton);
+                            therapeuticCV.setVisibility(View.GONE);
+
+                            TextView showItemNum = (TextView) findViewById(R.id.numOfSelectionDonor);
+                            showItemNum.setVisibility(View.GONE);
+
+                            CardView hospMedReqCV = (CardView) findViewById(R.id.HospItemReqButton);
+                            hospMedReqCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Log.d("HomeFrag", "Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent(MainActivity.this, HospitalHomeActivity.class);
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+                                    newIntent.putExtra("userFullName", currentUserFullName);
+
+                                    startActivity(newIntent);
+                                }
+                            });
+                        } else {
+                            CardView hospMedReqCV = (CardView) findViewById(R.id.HospItemReqButton);
+                            hospMedReqCV.setVisibility(View.GONE);
+
+                            TextView showItemNum = (TextView) findViewById(R.id.numOfSelectionHosp);
+                            showItemNum.setVisibility(View.GONE);
+
+                            CardView diagnosticCV =  (CardView) findViewById(R.id.DiagnosticButton);
+                            diagnosticCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, DiagnosticActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                            CardView treatmentCV =  (CardView) findViewById(R.id.TreatmentButton);
+                            treatmentCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, TreatmentActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                            CardView lifeSupportCV =  (CardView) findViewById(R.id.LifeSupportButton);
+                            lifeSupportCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, LifeSupportActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                            CardView monitorCV =  (CardView) findViewById(R.id.MonitorButton);
+                            monitorCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, MonitorActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                            CardView medLabCV =  (CardView) findViewById(R.id.MedLabButton);
+                            medLabCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, MedLabActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                            CardView therapeuticCV =  (CardView) findViewById(R.id.TherapeuticButton);
+                            therapeuticCV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Instantiate destination fragment
+                                    Log.d("HomeFrag","Button Pressed!");
+
+                                    // TODO : Remember this, copy this and change the intent from and to activities
+                                    // This section is for u to
+                                    // Redirect user to main activity class
+                                    Intent newIntent = new Intent( MainActivity.this, TherapeuticActivity.class);
+
+                                    // Assign ur information to new intent, with a key
+                                    newIntent.putExtra("userEmail", currentUserEmail);
+
+                                    startActivity(newIntent);
+
+                                    /*Fragment mFragment = new DiagnosticFragment();
+
+                                    // Copy this to switch page, but mfragment to desired fragment obj
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                }
+                            });
+
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+        return;
     }
 }

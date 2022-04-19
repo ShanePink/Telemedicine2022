@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link homeFragment#newInstance} factory method to
@@ -32,6 +34,8 @@ public class homeFragment extends Fragment {
     // Define variables here
     private TextView textView;
     private String backValue;
+
+    private String currentUserEmail = null;
 
     public homeFragment() {
         // Required empty public constructor
@@ -74,6 +78,8 @@ public class homeFragment extends Fragment {
             Log.d("Main",backValue);
             // Perform any action here
         }
+
+
     }
 
     @Override
@@ -94,25 +100,9 @@ public class homeFragment extends Fragment {
         }*/
 
 
-        Button diagnosticButton = (Button) inf.findViewById(R.id.DiagnosticButton);
-        diagnosticButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Instantiate destination fragment
-                        Log.d("HomeFrag","Button Pressed!");
 
-                        startActivity(new Intent( getActivity(), DiagnosticActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
 
-                        // Copy this to switch page, but mfragment to desired fragment obj
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
-                    }
-                }
-        );
-
-        Button lifeSupportButton = (Button) inf.findViewById(R.id.LifeSupportButton);
+        /*Button lifeSupportButton = (Button) inf.findViewById(R.id.LifeSupportButton);
         lifeSupportButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -123,11 +113,11 @@ public class homeFragment extends Fragment {
                         // Route the current page to another
                         // ONLY change the "LifeSupportActivity" to "YourDesiredActivity"
                         startActivity(new Intent( getActivity(), LifeSupportActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
+ *//*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                .replace(R.id.nav_fragment, mFragment ).commit();*//*
                     }
                 }
         );
@@ -141,11 +131,11 @@ public class homeFragment extends Fragment {
                         Log.d("HomeFrag","Button Pressed!");
 
                         startActivity(new Intent( getActivity(), TreatmentActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
+ *//*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                .replace(R.id.nav_fragment, mFragment ).commit();*//*
                     }
                 }
         );
@@ -159,11 +149,11 @@ public class homeFragment extends Fragment {
                         Log.d("HomeFrag","Button Pressed!");
 
                         startActivity(new Intent( getActivity(), MonitorActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
+ *//*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                .replace(R.id.nav_fragment, mFragment ).commit();*//*
                     }
                 }
         );
@@ -177,11 +167,11 @@ public class homeFragment extends Fragment {
                         Log.d("HomeFrag","Button Pressed!");
 
                         startActivity(new Intent( getActivity(), MedLabActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
+ *//*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                .replace(R.id.nav_fragment, mFragment ).commit();*//*
                     }
                 }
         );
@@ -195,14 +185,14 @@ public class homeFragment extends Fragment {
                         Log.d("HomeFrag","Button Pressed!");
 
                         startActivity(new Intent( getActivity(), TherapeuticActivity.class));
- /*                     /*Fragment mFragment = new DiagnosticFragment();
+ *//*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_fragment, mFragment ).commit();*/
+                                .replace(R.id.nav_fragment, mFragment ).commit();*//*
                     }
                 }
-        );
+        );*/
 
         // Make sure to return view
         return inf;

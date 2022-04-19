@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,47 +65,34 @@ public class DiagnosticActivity extends AppCompatActivity {
     String diagnosticType;
     String currentExpiryDate;
 
-    // COPY THIS TO YOUR ACTIVITY PAGE
-    public enum Equipment{
-        Diagnostic,
-        LifeSupport,
-        MedLab,
-        Monitor,
-        Therapeutic,
-        Treatment
-    }
-
-    public class EquipmentItem{
-        public String Uid;
-        public Equipment Equipment;
-        public String EquipmentType;
-        public String Brand;
-        public String Model;
-        public String SerialNo;
-        public Integer Qty;
-        public String ExpiryDate;
-
-        public EquipmentItem(){
-
-        }
-        public EquipmentItem(String uid, Equipment eqp, String equipmentType, String brand, String model, String serialNo, Integer qty, String expiryDate )
-        {
-            Uid = uid;
-            Equipment = eqp;
-            EquipmentType = equipmentType;
-            Brand = brand;
-            Model = model;
-            SerialNo = serialNo;
-            Qty = qty;
-            ExpiryDate = expiryDate;
-        }
-    }
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnostic);
         setTitle("Diagnostic Equipment");
+
+
+        // Fetch intent info
+        String userEmailJson = getIntent().getStringExtra("userEmail");
+        if (userEmailJson == null)
+        {
+            Log.d("Diagnostic","No email found");
+        }
+        else
+        {
+            // Convert the json to plain string
+            userEmail = new Gson().fromJson(userEmailJson,String.class);
+            if(userEmail == null)
+            {
+                Log.d("Diagnostic","No email found");
+            }
+            else
+                Log.d("Diagnostic",userEmail);
+            // Perform any action here
+        }
+
 
         // DATABASE
         // Connecting it to the database
@@ -135,38 +123,20 @@ public class DiagnosticActivity extends AppCompatActivity {
             }
         });
 
-
-        // Button
-        /*Button btn = findViewById(R.id.routeBtn);
-        btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // instantiate ur destination fragment
-                        Log.d("Diagnostic Activity","Button Pressed!");
-
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        // passing some values
-                        intent.putExtra("BackValue", "This has back");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-        );*/
-
         // Spinner
         Spinner dropdown1=(Spinner) findViewById(R.id.chooseType);
-        ArrayAdapter<String> adapter1=new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, type);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown1.setAdapter(adapter1);
 
-        Spinner dropdown2=(Spinner) findViewById(R.id.chooseBrand);
-        ArrayAdapter<String> adapter2=new ArrayAdapter<String>(this,
+        Spinner dropdown2 = (Spinner) findViewById(R.id.chooseBrand);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, brand);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown2.setAdapter(adapter2);
 
-        InputFilter filter=new InputFilter() {
+        InputFilter filter = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence charSequence, int start,
                                        int end, Spanned dest, int dstart, int dend) {
@@ -200,7 +170,9 @@ public class DiagnosticActivity extends AppCompatActivity {
                         currentExpiryDate = expDateTbx.getText().toString();
 
                         // CREATE OBJECT WITH IT
-                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Diagnostic,diagnosticType,manufacturerBrand,modelName,serialNo,quantity,currentExpiryDate);
+                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Diagnostic,diagnosticType,
+                                manufacturerBrand,modelName,serialNo,quantity,
+                                currentExpiryDate, userEmail, false);
 
                         // TO update the database
                         // PUSH , get a new ref, then set/ save the value
@@ -208,8 +180,9 @@ public class DiagnosticActivity extends AppCompatActivity {
                         newRef.setValue(equipment);
 
 
-                        startActivity(new Intent(DiagnosticActivity.this,
-                                MainActivity.class));
+
+                        // TODO : USE FINISH SO THAT THE EMAIL WOULD PASS BACK
+                        finish();
  /*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
@@ -221,65 +194,77 @@ public class DiagnosticActivity extends AppCompatActivity {
 
 
 
-        // CAN COPY IF YOU NEED TO QUERY THE INFO
-        // Read from the database
-        myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // FETCHING EQUIPMENT ITEM LIST FROM FIREBASE
-                List<EquipmentItem> eqpList = new ArrayList<EquipmentItem>();
 
-                Map<String, EquipmentItem> td = (HashMap<String,EquipmentItem>) dataSnapshot.getValue();
-                List<Object> tdList = new ArrayList<Object>(td.values());
-                for(Object objectTd :tdList ){
-                    EquipmentItem eqpItem2 = new EquipmentItem();
-                    Map<String, String> item = (Map<String, String>) objectTd;
-                    for (Map.Entry<String,String> entry : item.entrySet()) {
-                        String key = entry.getKey();
-                        String value = String.valueOf(entry.getValue());
 
-                        if(key.equals("Equipment"))
-                            eqpItem2.Equipment = Equipment.valueOf(value);
-                        if(key.equals("Qty"))
-                            eqpItem2.Qty = Integer.valueOf(value);
-                        if(key.equals("ExpiryDate"))
-                            eqpItem2.ExpiryDate = value;
-                        if(key.equals("EquipmentType"))
-                            eqpItem2.EquipmentType = value;
-                        if(key.equals("SerialNo"))
-                            eqpItem2.SerialNo = value;
-                        if(key.equals("Brand"))
-                            eqpItem2.Brand = value;
-                        if(key.equals("Model"))
-                            eqpItem2.Model = value;
-                        if(key.equals("Uid"))
-                            eqpItem2.Uid = value;
-
-                        System.out.println(key);
-                        System.out.println(value);
-                        // do stuff
-                    }
-                    eqpList.add(eqpItem2);
-                }
-
-                System.out.println("LIST ITEM");
-                for(EquipmentItem item: eqpList){
-                    System.out.println(item.Brand);
-                    System.out.println(item.Equipment);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Test", "Failed to read value.", error.toException());
-                // TODO: Place a snackbar here said have issue on firebase, log it too
-                Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),
-                        "There was a problem on database.", Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
-        });
+//        // CAN COPY IF YOU NEED TO QUERY THE INFO
+//        // Read from the database
+//        myRef.child("MedicalEquipment").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // FETCHING EQUIPMENT ITEM LIST FROM FIREBASE
+//                List<EquipmentItem> eqpList = new ArrayList<EquipmentItem>();
+//
+//                Map<String, EquipmentItem> td = (HashMap<String,EquipmentItem>) dataSnapshot.getValue();
+//                List<Object> tdList = new ArrayList<Object>(td.values());
+//                for(Object objectTd :tdList ){
+//                    EquipmentItem eqpItem2 = new EquipmentItem();
+//                    Map<String, String> item = (Map<String, String>) objectTd;
+//                    for (Map.Entry<String,String> entry : item.entrySet()) {
+//                        String key = entry.getKey();
+//                        String value = String.valueOf(entry.getValue());
+//
+//                        if(key.equals("com.example.iheartproject.Equipment"))
+//                            eqpItem2.Equipment = Equipment.valueOf(value);
+//                        if(key.equals("Qty"))
+//                            eqpItem2.Qty = Integer.valueOf(value);
+//                        if(key.equals("ExpiryDate"))
+//                            eqpItem2.ExpiryDate = value;
+//                        if(key.equals("EquipmentType"))
+//                            eqpItem2.EquipmentType = value;
+//                        if(key.equals("SerialNo"))
+//                            eqpItem2.SerialNo = value;
+//                        if(key.equals("Brand"))
+//                            eqpItem2.Brand = value;
+//                        if(key.equals("Model"))
+//                            eqpItem2.Model = value;
+//                        if(key.equals("Uid"))
+//                            eqpItem2.Uid = value;
+//
+//                        System.out.println(key);
+//                        System.out.println(value);
+//                        // do stuff
+//                    }
+//                    eqpList.add(eqpItem2);
+//                }
+//
+//                ArrayList<EquipmentItem> currentDonorItemList = new ArrayList<>();
+//                // Looping the list
+//                System.out.println("LIST ITEM");
+//                for(EquipmentItem item: eqpList){
+//                    System.out.println(item.Brand);
+//                    System.out.println(item.Equipment);
+//                    System.out.println(item.DonorEmail);
+//                    // To acquire only the specific donor item
+//                    // Check if the email is same with current user email
+//                    if (item.DonorEmail == userEmail)
+//                    {
+//                        // Add into current donor item list
+//                        currentDonorItemList.add(item);
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w("Test", "Failed to read value.", error.toException());
+//                // TODO: Place a snackbar here said have issue on firebase, log it too
+//                Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),
+//                        "There was a problem on database.", Snackbar.LENGTH_SHORT);
+//                snackbar.show();
+//            }
+//        });
 
 
     }

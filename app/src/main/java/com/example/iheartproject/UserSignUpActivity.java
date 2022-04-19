@@ -11,7 +11,9 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,10 +50,11 @@ public class UserSignUpActivity extends AppCompatActivity {
     private String password;
     private String confirmPassword;
     private String fullName;
+    private CheckBox checkBox;
     String TAG = "UserSignUpActivity";
 
     // Can copy straight
-    private void Login(String email, String password, String confirmPassword, String fullName, String donorUserName, DatabaseReference myRef){
+    private void Login(String email, String password, String confirmPassword, String fullName, String donorUserName, boolean termsChecked, DatabaseReference myRef){
         try
         {
             // Validate the user information
@@ -65,6 +68,12 @@ public class UserSignUpActivity extends AppCompatActivity {
             // Check if user key in identical password
             if (!password.equals(confirmPassword)){
                 Toast.makeText(UserSignUpActivity.this, "Password and Confirm Password does not match.",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(termsChecked == false){
+                Toast.makeText(UserSignUpActivity.this, "Please accept terms and condition",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -170,6 +179,7 @@ public class UserSignUpActivity extends AppCompatActivity {
         emailTbx = (EditText) findViewById(R.id.email);
         passwordTbx = (EditText) findViewById(R.id.password);
         confirmPasswordTbx = (EditText) findViewById(R.id.confirmPassword);
+        checkBox = findViewById(R.id.termsConditionCheckBoxDonor);
 
         // DATABASE
         // Connecting it to the database
@@ -206,6 +216,7 @@ public class UserSignUpActivity extends AppCompatActivity {
                                         // If successful, we parse the value
                                         Log.d("firebase", String.valueOf(task2.getResult().getValue()));
 
+                                        //
                                         List<User> userList = new ArrayList<>();
                                         // TODO: Rework on diagnostic and other activity, can implement as such
                                         // Basically, we get the child of the data one by one, parse and insert to our object list
@@ -248,15 +259,26 @@ public class UserSignUpActivity extends AppCompatActivity {
                         email = emailTbx.getText().toString();
                         password = passwordTbx.getText().toString();
                         confirmPassword = confirmPasswordTbx.getText().toString();
+                        boolean termsChecked = checkBox.isChecked();
 
                         // Do Login Details Verification Here
-                        Login(email, password, confirmPassword, fullName, donorUserName, myRef);
+                        Login(email, password, confirmPassword, fullName, donorUserName, termsChecked, myRef);
 
 
                     }
                 }
         );
 
+        TextView termsCondition = findViewById(R.id.termsConditionLinkDonor);
+        termsCondition.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(UserSignUpActivity.this,
+                                TermAndConditionActivity.class));
+                    }
+                }
+        );
 
         myRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override

@@ -2,10 +2,16 @@ package com.example.iheartproject;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 public class RespondActivity extends AppCompatActivity {
+
+    private String equipmentName, quantity, status;
+    private Button searchDbBtn;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

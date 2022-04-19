@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
-    android:background="@drawable/wallpaper"
+    android:background="@drawable/wallpaper2"
     tools:context=".IntroActivity">
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Hi There!"
-        android:textColor="@color/black"
+        android:textColor="#242B55"
         android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="111dp"
         android:text="Welcome to iHeart!"
-        android:textColor="@color/black"
+        android:textColor="#242B55"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,5 +52,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.843"
         tools:ignore="ImageContrastCheck" />
-    />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper5"
     tools:context=".DonorUserProfileActivity">
 
     <TextView
@@ -15,8 +16,8 @@
         android:layout_marginEnd="87dp"
         android:fontFamily="sans-serif-black"
         android:text="My Profile"
-        android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textColor="#242B55"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
@@ -41,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Full Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
@@ -60,7 +61,7 @@
         android:id="@+id/updateDonorUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Username"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -83,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_greybackground"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
@@ -105,7 +106,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:backgroundTint="#8C9EFF"
+        android:fontFamily="sans-serif-black"
         android:background="@drawable/round_button"
+        android:textSize="16sp"
         android:onClick="update"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -113,7 +117,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateEmail"
         app:layout_constraintVertical_bias="0.157"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintWidth_percent=".8"
+        tools:ignore="OnClick" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
