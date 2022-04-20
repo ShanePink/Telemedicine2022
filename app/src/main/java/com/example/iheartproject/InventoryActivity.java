@@ -87,7 +87,7 @@ public class InventoryActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
+        if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 

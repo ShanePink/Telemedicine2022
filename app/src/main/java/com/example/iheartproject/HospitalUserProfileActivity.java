@@ -40,10 +40,8 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
     private String updateEmail;
     String TAG = "HospitalUserProfileActivity";
 
-    public void EditUserProfile(FirebaseUser user, String previousEmail, String updateHospitalName, String updateHospitalUserName, String updateEmail)
-    {
-        try
-        {
+    public void EditUserProfile(FirebaseUser user, String previousEmail, String updateHospitalName, String updateHospitalUserName, String updateEmail) {
+        try {
             // DATABASE
             // Connecting it to the database
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://telemedicine2022-2137d-default-rtdb.asia-southeast1.firebasedatabase.app/");
@@ -55,12 +53,11 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "User email address updated to " + updateEmail);
-                            }
-                            else {
+                            } else {
                                 Log.d(TAG, "User email address not updated.");
                                 Toast.makeText(HospitalUserProfileActivity.this, "User email fail to update.",
                                         Toast.LENGTH_SHORT).show();
-                                Intent newIntent = new Intent (HospitalUserProfileActivity.this, profileFragment.class);
+                                Intent newIntent = new Intent(HospitalUserProfileActivity.this, profileFragment.class);
                                 startActivity(newIntent);
                                 finish();
                             }
@@ -90,8 +87,7 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                                             Intent newIntent = new Intent(HospitalUserProfileActivity.this, profileFragment.class);
                                             startActivity(newIntent);
                                             finish();
-                                        }
-                                        else {
+                                        } else {
                                             // If successful, parse the value
                                             Log.d("firebase", String.valueOf(task1.getResult().getValue()));
 
@@ -99,7 +95,7 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                                             Hospital currentUser = null;
                                             String key = null;
                                             // Basically, we get the child of the data one by one, parse and insert to our object list
-                                            for (DataSnapshot ds: task1.getResult().getChildren()) {
+                                            for (DataSnapshot ds : task1.getResult().getChildren()) {
                                                 Log.d(TAG, ds.getKey());
                                                 // Parse the whole row of firebase data into object, and add into list
                                                 Hospital userObj = ds.getValue(Hospital.class);
@@ -121,8 +117,7 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                                                 Intent newIntent = new Intent(HospitalUserProfileActivity.this, profileFragment.class);
                                                 startActivity(newIntent);
                                                 finish();
-                                            }
-                                            else {
+                                            } else {
                                                 Log.d("firebase", "Current user email is " + user.getEmail());
 
                                                 // Set your new value here and update to database
@@ -136,8 +131,7 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                                         if (!task.isSuccessful()) {
                                                             Log.e("firebase", "Error getting data.", task.getException());
-                                                        }
-                                                        else {
+                                                        } else {
                                                             Log.d("firebase", String.valueOf(task.getResult().getValue()));
                                                         }
                                                     }
@@ -179,9 +173,7 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Log.e(TAG, "updateWithEmail:failure" + ex.getMessage());
             Toast.makeText(HospitalUserProfileActivity.this, "Unexpected error occurred during edit user profile: " + ex.getMessage(),
                     Toast.LENGTH_SHORT).show();
@@ -198,42 +190,43 @@ public class HospitalUserProfileActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+
+            updateHospitalNameTbx = (EditText) findViewById(R.id.updateHospitalName);
+            updateHospitalUserNameTbx = (EditText) findViewById(R.id.updateHospitalUserName);
+            updateEmailTbx = (EditText) findViewById(R.id.updateEmail);
+
+            Gson gson = new Gson();
+            String userJson = getIntent().getStringExtra("user");
+            Log.d("Hospital User Profile", userJson);
+
+            Hospital user = gson.fromJson(userJson, Hospital.class);
+            updateHospitalNameTbx.setText(user.FullName);
+            updateHospitalUserNameTbx.setText(user.UserName);
+            updateEmailTbx.setText(user.Email);
+
+            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                Log.d("FB auth", "User has signed in.");
+            } else {
+                Log.d("FB auth", "User not found.");
+            }
+
+            Button saveButton = (Button) findViewById(R.id.saveButton);
+            saveButton.setOnClickListener((view -> {
+                String previousEmail = user.Email;
+                updateHospitalName = updateHospitalNameTbx.getText().toString();
+                updateHospitalUserName = updateHospitalUserNameTbx.getText().toString();
+                updateEmail = updateEmailTbx.getText().toString();
+
+                EditUserProfile(fbUser, previousEmail, updateHospitalName, updateHospitalUserName, updateEmail);
+            }));
+
+            Intent data = getIntent();
+            String fullName = data.getStringExtra("fullName");
+            Log.d(TAG, "onCreate: " + fullName + " ");
         }
 
-        updateHospitalNameTbx = (EditText) findViewById(R.id.updateHospitalName);
-        updateHospitalUserNameTbx = (EditText) findViewById(R.id.updateHospitalUserName);
-        updateEmailTbx = (EditText) findViewById(R.id.updateEmail);
-
-        Gson gson = new Gson();
-        String userJson = getIntent().getStringExtra("user");
-        Log.d("Hospital User Profile",userJson);
-
-        Hospital user = gson.fromJson(userJson, Hospital.class);
-        updateHospitalNameTbx.setText(user.FullName);
-        updateHospitalUserNameTbx.setText(user.UserName);
-        updateEmailTbx.setText(user.Email);
-
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            Log.d("FB auth", "User has signed in.");
-        } else {
-            Log.d("FB auth", "User not found.");
-        }
-
-        Button saveButton = (Button) findViewById(R.id.saveButton);
-        saveButton.setOnClickListener((view -> {
-            String previousEmail = user.Email;
-            updateHospitalName = updateHospitalNameTbx.getText().toString();
-            updateHospitalUserName = updateHospitalUserNameTbx.getText().toString();
-            updateEmail = updateEmailTbx.getText().toString();
-
-            EditUserProfile(fbUser, previousEmail, updateHospitalName, updateHospitalUserName, updateEmail);
-        }));
-
-        Intent data = getIntent();
-        String fullName = data.getStringExtra("fullName");
-        Log.d(TAG, "onCreate: " + fullName + " ");
-    }
 }

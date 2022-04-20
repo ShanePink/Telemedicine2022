@@ -225,9 +225,10 @@ public class DonorUserProfileActivity extends AppCompatActivity {
         // Show back button in action bar
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
+        if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
 
         updateFullNameTbx = (EditText) findViewById(R.id.updateFullName);
         updateDonorUserNameTbx = (EditText) findViewById(R.id.updateDonorUserName);

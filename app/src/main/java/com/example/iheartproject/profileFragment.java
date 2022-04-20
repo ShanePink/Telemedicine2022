@@ -88,7 +88,75 @@ public class profileFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Instantiate destination fragment
+                        Log.d("HomeFrag", "Button Pressed!");
 
+                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://telemedicine2022-2137d-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                        DatabaseReference myRef = database.getReference();
+
+                        // Connecting it to the firebase authentication database
+                        FirebaseAuth tmAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = tmAuth.getCurrentUser();
+                        myRef.child("users").child("test").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task2) {
+                                if (!task2.isSuccessful()) {
+                                    // If not successful, we stop the process
+                                    Log.e("firebase", "Error getting data", task2.getException());
+                                    return;
+                                } else {
+                                    // If successful, we parse the value
+                                    Log.d("firebase", String.valueOf(task2.getResult().getValue()));
+
+                                    List<User> userList = new ArrayList<>();
+                                    User currentUser = null;
+                                    // Basically, we get the child of the data one by one, parse and insert to our object list
+                                    for (DataSnapshot ds : task2.getResult().getChildren()) {
+                                        // Parse the whole row of firebase data into our object, and add into list
+                                        User userObj = ds.getValue(User.class);
+                                        userList.add(userObj);
+                                    }
+
+                                    // Loop again to match user
+                                    for (User userObj : userList) {
+                                        // try to match if user info is same as firebase realtime
+                                        if (user.getEmail().equals(userObj.Email)) {
+                                            Log.d("firebase", "User email match");
+                                            currentUser = userObj;
+                                            break;
+                                        }
+                                    }
+
+                                    // Check if user exist
+                                    if (currentUser == null) {
+                                        Log.e("firebase", "Unable to find user info in firebase.");
+                                        return;
+                                    } else {
+                                        if (currentUser.isHospital) {
+                                            Intent i = new Intent(getActivity(), HospitalUserProfileActivity.class);
+                                            Gson gson = new Gson();
+                                            String userJson = gson.toJson(currentUser);
+                                            i.putExtra("user", userJson);
+                                            startActivity(i);
+                                            ((Activity) getActivity()).overridePendingTransition(0, 0);
+                                        } else {
+                                            Intent i = new Intent(getActivity(), DonorUserProfileActivity.class);
+                                            // We parsing user object into json, so that we can pass it to other activities
+                                            Gson gson = new Gson();
+                                            String userJson = gson.toJson(currentUser);
+
+                                            // Assign ur information to new intent, with a key
+                                            i.putExtra("user", userJson);
+
+                                            startActivity(i);
+
+//                                            getActivity().getFragmentManager().popBackStack();
+//                                            ((Activity) getActivity()).overridePendingTransition(0, 0);
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
         );

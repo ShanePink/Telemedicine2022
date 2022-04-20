@@ -62,6 +62,10 @@ public class HospitalRequestActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         // Fetch intent info
         String userEmailJson = getIntent().getStringExtra("userEmail");
         if (userEmailJson == null)
@@ -234,9 +238,6 @@ public class HospitalRequestActivity extends AppCompatActivity {
                 }
         );
 
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
 
     }
