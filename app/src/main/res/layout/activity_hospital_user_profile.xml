@@ -35,7 +35,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hospUserProfile"
-        app:srcCompat="@drawable/hospital" />
+        app:srcCompat="@drawable/healthcare_provider" />
 
     <EditText
         android:id="@+id/updateHospitalName"

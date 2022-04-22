@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class statusFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Hospital currentUser = null;
     public statusFragment() {
         // Required empty public constructor
     }
@@ -97,6 +99,7 @@ public class statusFragment extends Fragment {
         // Connecting it to the firebase authentication database
         FirebaseAuth tmAuth = FirebaseAuth.getInstance();
         FirebaseUser user = tmAuth.getCurrentUser();
+
         myRef.child("users").child("test").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -108,16 +111,16 @@ public class statusFragment extends Fragment {
                     // If successful, we parse the value
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
 
-                    List<User> userList = new ArrayList<>();
-                    User currentUser = null;
+                    List<Hospital> userList = new ArrayList<>();
+
                     for (DataSnapshot ds : task.getResult().getChildren()) {
                         // Parse the whole row of firebase data into our object, and add into list
-                        User userObj = ds.getValue(User.class);
+                        Hospital userObj = ds.getValue(Hospital.class);
                         userList.add(userObj);
                     }
 
                     // Loop again to match user
-                    for (User userObj : userList) {
+                    for (Hospital userObj : userList) {
                         // Try to match if user info is same as firebase realtime
                         if (user.getEmail().equals(userObj.Email)) {
                             Log.d("firebase", "User email match.");
@@ -139,6 +142,10 @@ public class statusFragment extends Fragment {
                                     // Instantiate destination fragment
                                     Log.d("Status Frag", "Button Pressed!");
                                     Intent i = new Intent(getActivity(), HospitalRequestActivity.class);
+
+                                    i.putExtra("userFullName", currentUser.FullName);
+                                    i.putExtra("userEmail", currentUser.Email);
+
                                     startActivity(i);
                                     ((Activity) getActivity()).overridePendingTransition(0, 0);
                                 }

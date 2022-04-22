@@ -95,7 +95,6 @@ public class DiagnosticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_diagnostic);
         setTitle("Diagnostic Equipment");
 
-
         // Fetch intent info
         String userEmailJson = getIntent().getStringExtra("userEmail");
         if (userEmailJson == null)
@@ -210,7 +209,7 @@ public class DiagnosticActivity extends AppCompatActivity {
                         currentExpiryDate = expDateTbx.getText().toString();
 
                         // CREATE OBJECT WITH IT
-                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Diagnostic,diagnosticType,
+                        EquipmentItem equipment = new EquipmentItem(uuid, Equipment.Diagnostic, diagnosticType,
                                 manufacturerBrand,modelName,serialNo,quantity,
                                 currentExpiryDate, userEmail, false);
 

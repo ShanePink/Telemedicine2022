@@ -149,8 +149,8 @@ public class HospitalHomeActivity extends AppCompatActivity {
             String[] receiverEmails = toEmailList.toArray(new String[toEmailList.size()]);
 
             // TODO : Change this to ur emails
-            String stringSenderEmail = "eunicetan953@gmail.com";
-            String stringPasswordSenderEmail = "eunicetan123456";
+            String stringSenderEmail = "iheartapp22@gmail.com";
+            String stringPasswordSenderEmail = "iheart2022";
 
             String stringHost = "smtp.gmail.com";
 
@@ -196,7 +196,7 @@ public class HospitalHomeActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (MessagingException e) {
             Toast.makeText(HospitalHomeActivity.this,
-                    "Email exception occured.", Toast.LENGTH_SHORT).show();
+                    "Email exception occurred.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

@@ -37,7 +37,7 @@ public class LifeSupportActivity extends AppCompatActivity {
             new EquipmentObj("Getinge", "Ventilators"),
             new EquipmentObj("Hamilton", "Ventilators"),
             new EquipmentObj("Dräger", "Ventilators"),
-            new EquipmentObj("Mindray", "Ultrasound"),
+            new EquipmentObj("Mindray", "Ventilators"),
             new EquipmentObj("Medtronic", "Ventilators"),
             new EquipmentObj("GE", "Ventilators"),
             new EquipmentObj("Philips", "Ventilators"),
@@ -207,7 +207,8 @@ public class LifeSupportActivity extends AppCompatActivity {
 
                         // CREATE OBJECT WITH IT
                         EquipmentItem equipment = new EquipmentItem(uuid, Equipment.LifeSupport, lifeSupportType,
-                                manufacturerBrand, modelName, serialNo, quantity, currentExpiryDate, userEmail, false);
+                                manufacturerBrand, modelName, serialNo, quantity,
+                                currentExpiryDate, userEmail, false);
 
                         // TO update the database
                         // PUSH , get a new ref, then set/ save the value

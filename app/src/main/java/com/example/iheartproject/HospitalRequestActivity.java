@@ -67,15 +67,13 @@ public class HospitalRequestActivity extends AppCompatActivity {
         }
 
         // Fetch intent info
-        String userEmailJson = getIntent().getStringExtra("userEmail");
-        if (userEmailJson == null)
+        userEmail = getIntent().getStringExtra("userEmail");
+        if (userEmail == null)
         {
             Log.d("HospHome","No email found");
         }
         else
         {
-            // Convert the json to plain string
-            userEmail = new Gson().fromJson(userEmailJson,String.class);
             if(userEmail == null)
             {
                 Log.d("HospHome","No email found");
@@ -203,12 +201,15 @@ public class HospitalRequestActivity extends AppCompatActivity {
                                                                 Log.d("firebase", ds.getKey() + " has been updated");
                                                                 // Send Email here
 
-                                                                String content =   String.format("Dear donor, \n\nEquipment : %s \nType : %s \nBrand : %s \n" +
+                                                                String content = String.format("Dear donor, \n\nEquipment : %s \nType : %s \nBrand : %s \n" +
                                                                                 "Model : %s  \nSerial No : %s \n\n" +
                                                                         "This item has been donated successfully to %s.\n " +
                                                                                 "Please contact %s for handover session. \n Thank you."
                                                                         ,chkEqp.getEquipment().toString(), chkEqp.getEquipmentType(), chkEqp.getBrand(), chkEqp.getModel(), chkEqp.getSerialNo(), userFullName, userEmail);
                                                                 SendEmail(chkEqp.getDonorEmail(), content);
+                                                                Intent newIntent = new Intent(HospitalRequestActivity.this, MainActivity.class);
+                                                                startActivity(newIntent);
+                                                                finish();
 
                                                             }
                                                         })
@@ -248,8 +249,8 @@ public class HospitalRequestActivity extends AppCompatActivity {
             Log.i("Send email", "");
 
             // TODO : Change this to ur emails
-            String stringSenderEmail = "eunicetan953@gmail.com";
-            String stringPasswordSenderEmail = "eunicetan123456";
+            String stringSenderEmail = "iheartapp22@gmail.com";
+            String stringPasswordSenderEmail = "iheart2022";
 
             String stringHost = "smtp.gmail.com";
 

@@ -37,7 +37,7 @@
         android:layout_marginTop="30dp"
         android:contentDescription="Hospital Icon"
         android:background="@drawable/edit_text_greybackground"
-        app:srcCompat="@drawable/hospital"
+        app:srcCompat="@drawable/healthcare_provider"
         android:scaleType="centerInside"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"

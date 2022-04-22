@@ -52,10 +52,12 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".UserSignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SelectionTabActivity"/>
         <activity
             android:name=".HospitalSignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SelectionTabActivity"/>
         <activity
             android:name=".SelectionTabActivity"
             android:exported="false" />

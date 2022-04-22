@@ -23,8 +23,10 @@ public class TermAndConditionActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar != null){
+            //hide back button in app bar
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(false);
         }
 
         text = findViewById(R.id.terms_condition_textview);

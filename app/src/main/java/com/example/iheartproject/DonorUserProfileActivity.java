@@ -226,7 +226,9 @@ public class DonorUserProfileActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            //hide back button in app bar
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(false);
         }
 
 

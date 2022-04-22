@@ -3,6 +3,7 @@ package com.example.iheartproject;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -198,4 +199,21 @@ public class homeFragment extends Fragment {
         return inf;
 
     }
+
+
+
+    @Override
+    public void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        MainActivity act = (MainActivity) getActivity();
+        act.SetButtons();
+
+
+    }
+
+
+
+
 }

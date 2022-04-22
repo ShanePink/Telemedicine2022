@@ -211,8 +211,7 @@ public class MedLabActivity extends AppCompatActivity {
                         DatabaseReference newRef = myRef.child("MedicalEquipment").push();
                         newRef.setValue(equipment);
 
-                        startActivity(new Intent(MedLabActivity.this,
-                                MainActivity.class));
+                        finish();
  /*                     /*Fragment mFragment = new DiagnosticFragment();
 
                         // Copy this to switch page, but mfragment to desired fragment obj
